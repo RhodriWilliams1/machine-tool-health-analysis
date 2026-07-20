@@ -18,7 +18,7 @@
 - [x] Select and create .gitignore
 - [x] Export initial environment.yml for recording package dependencies
 - [x] Create remote Github repo and push software infrastructure
-- [ ] Setup continuous integration, using actions from GitHub
+- [x] Setup continuous integration, using actions from GitHub
 
 ## Build the software skeleton
 
