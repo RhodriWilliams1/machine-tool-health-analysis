@@ -1,0 +1,5 @@
+name: machine-tool-health-analysis
+channels:
+  - defaults
+dependencies:
+  - python=3.11
