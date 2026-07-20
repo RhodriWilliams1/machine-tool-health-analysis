@@ -1,0 +1,37 @@
+# This is just the name of the action, you can call it whatever you like.
+name: Tests (pytest)
+
+# This is the event that triggers the action. In this case, we are telling GitHub to run the tests whenever a pull request is made to the main branch.
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+# This is a list of jobs that the action will run. In this case, we have only one job called build.
+jobs:
+    build:
+        # This is the environment that the job will run on. In this case, we are using the latest version of Ubuntu, however you can use other operating systems like Windows or MacOS if you like!
+        runs-on: ubuntu-latest
+
+        # This is a list of steps that the job will run. Each step is a command that will be executed on the environment.
+        steps:
+            # This command tells GitHub to use a pre-built action. In this case, we are using the actions/checkout action to check out the repository. This just means that GitHub will use this repository's code to run the tests.
+            - uses: actions/checkout@v7 # Check out the repository on github
+
+            # This is the name of the step. This is just a label that will be displayed in the GitHub UI.
+            - name: Set up Conda
+              # This command tells GitHub to use a pre-built action. In this case, we are using the conda-incubator/setup-miniconda@v4.
+              uses: conda-incubator/setup-miniconda@v4
+              with:
+                  activate-environment: machine-tool-health-analysis
+                  environment-file: environment.yml
+                  auto-activate-base: false
+
+            # This step runs the tests using the pytest command. Remember to use the --mpl and --regtest flags to run the tests that use matplotlib and pytest-regtest.
+            - name: Run tests
+              shell: bash -el {0}
+              run: |
+                pytest
