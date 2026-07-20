@@ -95,12 +95,14 @@ See the LICENSE file for further details.
 
 ## Authors and Maintainers
 
-- Author:
-  - Rhodri Williams
-- Maintainer:
-  - Rhodri Williams
-- Contact
-  - rwilliams15@amrc.co.uk
+Author:
+- Rhodri Williams
+
+Maintainer:
+- Rhodri Williams
+
+Contact:
+- rwilliams15@amrc.co.uk
 
 
 ## References
