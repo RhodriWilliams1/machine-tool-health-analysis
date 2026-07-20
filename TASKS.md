@@ -17,7 +17,7 @@
 - [x] Select and create LICENSE
 - [x] Select and create .gitignore
 - [x] Export initial environment.yml for recording package dependencies
-- [ ] Create remote Github repo and push software infrastructure
+- [x] Create remote Github repo and push software infrastructure
 - [ ] Setup continuous integration, using actions from GitHub
 
 ## Build the software skeleton
