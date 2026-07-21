@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+
+[project]
+name = "machine-tool-health-analysis"
+dynamic = ["version"]
+description = "A package to analyse the machine tool health using a machine learning pipeline"
+authors = [{name="Rhodri Williams", email="rwilliams15@amrc.co.uk"}]
+dependencies = [
+]
+keywords = ["tool health", "machine learning"]
+readme = "README.md"
+license = {file = "LICENSE"}
+
+
+[tool.setuptools_scm]
