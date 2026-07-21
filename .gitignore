@@ -222,7 +222,11 @@ __marimo__/
 
 
 # Research data (not stored in GitHub)
-data/
+data/*
+!data/README.md
+!data/raw/
+!data/processed/
+
 *.csv
 *.pkl
 *.RData
