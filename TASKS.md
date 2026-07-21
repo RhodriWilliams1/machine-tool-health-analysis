@@ -4,8 +4,8 @@
 
 - [x] Read assignment brief carefully
 - [x] Read and review the two included academic papers
-- [ ] Download dataset
-- [ ] Read dataset documentation
+- [x] Download dataset
+- [x] Read dataset documentation
 - [x] Decide overall project structure
 
 ## Set up the software project
@@ -22,10 +22,10 @@
 
 ## Build the software skeleton
 
-- [ ] Create the command-line interface
+- [x] Create the command-line interface
 - [ ] Create configuration support
-- [ ] Create the src package
-- [ ] Create tests folder
+- [x] Create the src package
+- [x] Create tests folder
 - [ ] Create modules
     - [ ] data_loader.py
     - [ ] preprocessing.py
