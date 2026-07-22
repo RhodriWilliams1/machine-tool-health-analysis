@@ -7,10 +7,14 @@ dynamic = ["version"]
 description = "A package to analyse the machine tool health using a machine learning pipeline"
 authors = [{name="Rhodri Williams", email="rwilliams15@amrc.co.uk"}]
 dependencies = [
+    "numpy",
+    "scipy",
 ]
 keywords = ["tool health", "machine learning"]
 readme = "README.md"
 license = {file = "LICENSE"}
 
+[tool.setuptools.packages.find]
+include = ["machine_tool_health_analysis*"]
 
 [tool.setuptools_scm]

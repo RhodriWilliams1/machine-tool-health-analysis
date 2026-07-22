@@ -5,3 +5,5 @@ dependencies:
   - python=3.11
   - pre-commit
   - pytest
+  - numpy
+  - scipy
