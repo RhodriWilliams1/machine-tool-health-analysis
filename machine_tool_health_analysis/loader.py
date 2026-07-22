@@ -7,6 +7,7 @@ This codes the data loading functionality
 ### Imports
 from pathlib import Path
 from scipy.io import loadmat
+import mat73
 from typing import Union
 
 
@@ -22,7 +23,7 @@ class DataLoader:
         Parameters
         ----------
         data_path : str
-            Path to the folder containing the data
+            Path to the directory containing the .mat data files
 
         Returns
         -------
@@ -62,6 +63,21 @@ class DataLoader:
         dataset = {}
 
         for file in self.data_path.glob("*.mat"):
-            dataset[file.stem] = loadmat(file)
+            dataset[file.stem] = self.load_file(file)
 
         return dataset
+
+    def load_file(self, filepath):
+        """
+        Load a single MATLAB file.
+
+        Parameters
+        ----------
+        file_path : str
+            Path to the .mat file
+        """
+
+        try:
+            return loadmat(filepath)
+        except NotImplementedError:
+            return mat73.loadmat(filepath)

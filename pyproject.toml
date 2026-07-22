@@ -9,6 +9,7 @@ authors = [{name="Rhodri Williams", email="rwilliams15@amrc.co.uk"}]
 dependencies = [
     "numpy",
     "scipy",
+    "mat73",
 ]
 keywords = ["tool health", "machine learning"]
 readme = "README.md"

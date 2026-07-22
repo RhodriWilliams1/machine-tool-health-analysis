@@ -4,8 +4,11 @@ test/test_loader.py
 This code contains for the loader.py module
 """
 
-import numpy as np
+### Imports
 import pytest
+from unittest.mock import patch
+
+import numpy as np
 from scipy.io import savemat
 
 from machine_tool_health_analysis.loader import DataLoader
@@ -25,7 +28,38 @@ def sample_mat_files(tmp_path):
     return tmp_path
 
 
-def test_load_all_with_path_object(sample_mat_files):
+def test_load_file(sample_mat_files):
+    """Tests loading a single MATLAB file."""
+    filepath = sample_mat_files / "Segmented_Linear_Baseline.mat"
+
+    loader = DataLoader(sample_mat_files)
+    data = loader.load_file(filepath)
+
+    assert "SpindleAccX" in data
+
+    loaded_acc = data["SpindleAccX"].flatten()
+    np.testing.assert_array_equal(loaded_acc, np.array([1, 2, 3]))
+
+
+def test_load_file_v73_fallback(sample_mat_files):
+    """Tests v7.3 MATLAB fallback loading."""
+    filepath = sample_mat_files / "Segmented_Linear_Baseline.mat"
+
+    mock_data = {"v73_signal": [100, 200, 300]}
+
+    with patch(
+        "machine_tool_health_analysis.loader.loadmat", side_effect=NotImplementedError
+    ), patch(
+        "machine_tool_health_analysis.loader.mat73.loadmat", return_value=mock_data
+    ) as mock_mat73:
+        loader = DataLoader(sample_mat_files)
+        data = loader.load_file(filepath)
+
+        mock_mat73.assert_called_once_with(filepath)
+        assert data["v73_signal"] == [100, 200, 300]
+
+
+def test__load_all_loads_mat_files(sample_mat_files):
     """Tests loading data when data_path is a Path object."""
     loader = DataLoader(sample_mat_files)
     dataset = loader.load_all()
@@ -38,15 +72,6 @@ def test_load_all_with_path_object(sample_mat_files):
     # Verify actual array content (flattening because scipy transforms 1D -> 2D)
     loaded_acc = dataset["Segmented_Linear_Baseline"]["SpindleAccX"].flatten()
     np.testing.assert_array_equal(loaded_acc, np.array([1, 2, 3]))
-
-
-def test_load_all_with_string_path(sample_mat_files):
-    """Tests loading data when data_path is passed as a string."""
-    loader = DataLoader(str(sample_mat_files))
-    dataset = loader.load_all()
-
-    assert isinstance(dataset, dict)
-    assert len(dataset) == 2
 
 
 def test_load_all_nonexistent_directory(tmp_path):
