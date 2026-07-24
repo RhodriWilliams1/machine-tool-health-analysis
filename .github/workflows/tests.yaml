@@ -31,6 +31,11 @@ jobs:
                   auto-activate-base: false
 
             # This step runs the tests using the pytest command. Remember to use the --mpl and --regtest flags to run the tests that use matplotlib and pytest-regtest.
+            - name: Install package
+              shell: bash -el {0}
+              run: |
+                pip install -e .
+
             - name: Run tests
               shell: bash -el {0}
               run: |
