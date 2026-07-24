@@ -27,7 +27,7 @@ def command_line():
 
     # Add arguments to the parser
     parser.add_argument(
-        "--input_file", required=True, help="Input data file provided to the model"
+        "--input_dir", required=True, help="Directory containing the MATLAB data files."
     )
     parser.add_argument(
         "--output_dir", required=True, help="Directory for saving results"

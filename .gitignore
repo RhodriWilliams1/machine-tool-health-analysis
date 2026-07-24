@@ -230,3 +230,4 @@ data/*
 *.csv
 *.pkl
 *.RData
+*.mat

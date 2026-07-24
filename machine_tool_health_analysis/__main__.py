@@ -4,13 +4,28 @@ This is the main file of the program
 
 ### Local imports
 from . import cli
+from .loader import DataLoader
+
+
+def main():
+    """
+    Run the application
+
+    Returns
+    -------
+    None.
+    """
+    ### Call the command line interface
+    options = cli.command_line()
+    # Tell the user the application has started
+    print("Machine tool health analysis...")
+
+    ### Load the data
+    loader = DataLoader(options.input_dir)
+    dataset = loader.load_all()
+    # Check it has worked
+    print(f"Loaded {len(dataset)} files.")
+
 
 if __name__ == "__main__":
-    # Call the command line interface
-    options = cli.command_line()
-
-    print("Machine tool health analysis...")
-    print(f"Input file: {options.input_file}")
-    print(f"Output directory: {options.output_dir}")
-
-    print(options)
+    main()
