@@ -2,9 +2,13 @@
 This is the main file of the program
 """
 
+### Imports
+from pathlib import Path
+
 ### Local imports
 from . import cli
 from .loader import DataLoader
+from .feature_pipeline import build_training_dataset
 
 
 def main():
@@ -22,9 +26,24 @@ def main():
 
     ### Load the data
     loader = DataLoader(options.input_dir)
-    dataset = loader.load_all()
+    datasets = loader.load_all()
     # Check it has worked
-    print(f"Loaded {len(dataset)} files.")
+    print(f"Loaded {len(datasets)} files.")
+
+    LABELS = {
+        "Segmented_Linear_Baseline": "baseline",
+        "Segmented_Linear_Heavy": "heavy",
+        "Segmented_Linear_Override": "override",
+    }
+
+    experiments = [(datasets[name], LABELS[name]) for name in LABELS]
+
+    df = build_training_dataset(experiments)
+
+    output_file = Path(options.output_dir) / "feature_dataset.csv"
+    df.to_csv(output_file, index=False)
+
+    print(f"Saved feature dataset to {output_file}")
 
 
 if __name__ == "__main__":
