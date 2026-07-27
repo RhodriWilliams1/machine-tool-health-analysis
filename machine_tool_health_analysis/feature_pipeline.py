@@ -72,3 +72,59 @@ def create_feature_dataset(data: dict, label: str) -> pd.DataFrame:
         )
 
     return pd.DataFrame(rows)
+
+
+def combine_feature_datasets(datasets: list[pd.DataFrame]) -> pd.DataFrame:
+    """
+    Combine a list of dataframes into a single dataset
+
+    Parameters
+    ----------
+    datasets : list[pd.DataFrame]
+        A list of DataFrames each containing the extracted features for each
+        run of an simulated test, together with the corresponding class label.
+
+    Returns
+    -------
+    pandas.DataFrame
+        A dataframe containing the extracted features for each run of all
+        simulated tests, together with the corresponding class label.
+
+    Raises
+    ------
+    ValueError
+        If the dataset is empty.
+    """
+    if not datasets:
+        raise ValueError("No datasets provided.")
+
+    return pd.concat(datasets, ignore_index=True)
+
+
+def build_training_dataset(experiments: list[tuple[dict, str]]) -> pd.DataFrame:
+    """
+    Build the complete classifier dataset from multiple experiments.
+
+    Parameters
+    ----------
+    experiments : list[tuple[dict, str]]
+        A list where each element contains a tuple with the data stored in a
+        dict and the corresponding label for the experiment stored as a string
+
+    Returns
+    -------
+    pandas.DataFrame
+        A dataframe containing the extracted features for each run of all
+        simulated tests, together with the corresponding class label.
+
+    Raises
+    ------
+
+    """
+
+    feature_tables = []
+
+    for data, label in experiments:
+        feature_tables.append(create_feature_dataset(data, label))
+
+    return combine_feature_datasets(feature_tables)
