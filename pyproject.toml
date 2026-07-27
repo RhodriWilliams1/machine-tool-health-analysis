@@ -10,6 +10,7 @@ dependencies = [
     "numpy",
     "scipy",
     "mat73",
+    "pandas",
 ]
 keywords = ["tool health", "machine learning"]
 readme = "README.md"

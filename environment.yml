@@ -9,3 +9,4 @@ dependencies:
   - numpy
   - scipy
   - mat73
+  - pandas
