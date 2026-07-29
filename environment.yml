@@ -1,7 +1,6 @@
 name: machine-tool-health-analysis
 channels:
   - defaults
-  - conda-forge
 dependencies:
   - python=3.11
   - pre-commit
@@ -10,3 +9,4 @@ dependencies:
   - scipy
   - mat73
   - pandas
+  - scikit-learn

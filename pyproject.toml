@@ -11,6 +11,7 @@ dependencies = [
     "scipy",
     "mat73",
     "pandas",
+    "scikit-learn",
 ]
 keywords = ["tool health", "machine learning"]
 readme = "README.md"
