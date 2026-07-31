@@ -10,6 +10,7 @@ from . import cli
 from .loader import DataLoader
 from .features import select_features
 from .feature_pipeline import build_training_dataset, split_dataset
+from .preprocessing import scale_features
 
 
 def main():
@@ -48,6 +49,9 @@ def main():
 
     X, y = select_features(df)
     X_train, X_test, y_train, y_test = split_dataset(X, y)
+    X_train_scaled, X_test_scaled, scaler = scale_features(X_train, X_test)
+
+    print("Features selected, split for train and testing, and predictors normalised")
 
 
 if __name__ == "__main__":
