@@ -13,6 +13,7 @@ from machine_tool_health_analysis.feature_pipeline import (
     create_feature_dataset,
     combine_feature_datasets,
     build_training_dataset,
+    split_dataset,
 )
 
 
@@ -134,3 +135,53 @@ def test_build_training_dataset(monkeypatch):
 def test_combine_feature_datasets_empty():
     with pytest.raises(ValueError):
         combine_feature_datasets([])
+
+
+### Tests for splitting the dataset
+
+
+@pytest.fixture
+def sample_X():
+    """Provides an isolated feature matrix fixture (100 rows)."""
+    np.random.seed(42)
+    return pd.DataFrame(
+        {
+            "feat_1": np.random.randn(100),
+            "feat_2": np.random.randn(100),
+            "feat_3": np.random.randn(100),
+        }
+    )
+
+
+@pytest.fixture
+def sample_y():
+    """Provides an isolated target Series fixture (100 rows)."""
+    np.random.seed(42)
+    return pd.Series(np.random.choice([0, 1], size=100), name="target")
+
+
+def test_split_dataset_proportions(sample_X, sample_y):
+    """Verify row counts and the 35% test split ratio using isolated inputs."""
+    X_train, X_test, y_train, y_test = split_dataset(sample_X, sample_y)
+
+    # Totals add up
+    assert len(X_train) + len(X_test) == len(sample_X)
+    assert len(y_train) + len(y_test) == len(sample_y)
+
+    # Exact expected counts for 100 rows at 35% test_size
+    assert len(X_test) == 35
+    assert len(X_train) == 65
+    assert len(y_test) == 35
+    assert len(y_train) == 65
+
+
+def test_split_dataset_reproducibility(sample_X, sample_y):
+    """Verify random_state=42 yields identical splits across separate runs."""
+    X_train1, X_test1, y_train1, y_test1 = split_dataset(sample_X, sample_y)
+    X_train2, X_test2, y_train2, y_test2 = split_dataset(sample_X, sample_y)
+
+    # Exact equality checks for pandas objects
+    pd.testing.assert_frame_equal(X_train1, X_train2)
+    pd.testing.assert_frame_equal(X_test1, X_test2)
+    pd.testing.assert_series_equal(y_train1, y_train2)
+    pd.testing.assert_series_equal(y_test1, y_test2)

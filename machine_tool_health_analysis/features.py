@@ -56,3 +56,24 @@ def get_mean(signal: np.ndarray) -> float:
         The mean value of the signal.
     """
     return np.mean(signal)
+
+
+def select_features(df):
+    """
+    Select the feature matrix and target labels for model development.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        DataFrame containing all features and labels.
+
+    Returns
+    -------
+    X : pandas.DataFrame
+        Feature matrix.
+    y : pandas.Series
+        Target labels.
+    """
+    X = df[["ptp_x_acc", "mean_x_acc", "kurtosis_y_acc"]]
+    y = df["label"]
+    return X, y

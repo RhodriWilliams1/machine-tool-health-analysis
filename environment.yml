@@ -10,3 +10,4 @@ dependencies:
   - scipy
   - mat73
   - pandas
+  - scikit-learn

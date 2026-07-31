@@ -4,6 +4,7 @@ feature_pipeline.py
 
 ### Import
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
 ### Local Imports
 from machine_tool_health_analysis.data_access import get_signal
@@ -128,3 +129,29 @@ def build_training_dataset(experiments: list[tuple[dict, str]]) -> pd.DataFrame:
         feature_tables.append(create_feature_dataset(data, label))
 
     return combine_feature_datasets(feature_tables)
+
+
+def split_dataset(X, y):
+    """
+    Split the feature matrix and labels into training and testing datasets.
+
+    Parameters
+    ----------
+    X : pandas.DataFrame
+        Feature matrix.
+    y : pandas.Series
+        Target labels.
+
+    Returns
+    -------
+    X_train : pandas.DataFrame
+    X_test : pandas.DataFrame
+    y_train : pandas.Series
+    y_test : pandas.Series
+    """
+    return train_test_split(
+        X,
+        y,
+        test_size=0.35,
+        random_state=42,
+    )
