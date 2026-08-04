@@ -11,3 +11,5 @@ dependencies:
   - mat73
   - pandas
   - scikit-learn
+  - matplotlib
+  - seaborn
